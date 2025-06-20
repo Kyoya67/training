@@ -4,7 +4,10 @@ import styles from "./page.module.css";
 
 async function getPhotos() {
   const data: { photos: Photo[] } = await fetch(
-    "http://localhost:8080/api/photos"
+    "http://localhost:8080/api/photos",
+    {
+      cache: "no-store",
+    }
   ).then((res) => res.json());
   return data.photos.map(({ id, title }) => ({ id, title }));
 }
