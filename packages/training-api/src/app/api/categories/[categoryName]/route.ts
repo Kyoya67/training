@@ -1,20 +1,24 @@
 import { type NextRequest } from "next/server";
 import { categories } from "@/_mock/categories";
 
+type Props = {
+  params: { [key: string]: string };
+};
+
 export async function GET(
   request: NextRequest,
-  { params }: { params: { categoryName: string } },
+  { params }: Props,
 ) {
-  // 🚧: DBに接続しレコードを取得する
-  const category = categories.find(
-    (category) => category.name === params.categoryName,
-  );
-  if (!category) {
-    return Response.json({ message: "Not Found" }, { status: 404 });
-  }
+  // const category = categories.find(
+  //   (category) => category.name === params.categoryName,
+  // );
+  // if (!category) {
+  //   return Response.json({ message: "Not Found" }, { status: 404 });
+  // }
+  const categoryName = params.categoryName;
 
   const searchParams = request.nextUrl.searchParams;
   const searchParamsObj = Object.fromEntries(searchParams);
 
-  return Response.json({ category, searchParamsObj });
+  return Response.json({ categoryName, searchParamsObj });
 }
