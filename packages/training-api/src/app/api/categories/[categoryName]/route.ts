@@ -2,7 +2,7 @@ import { type NextRequest } from "next/server";
 import { categories } from "@/_mock/categories";
 
 export async function GET(
-  _: NextRequest,
+  request: NextRequest,
   { params }: { params: { categoryName: string } },
 ) {
   // 🚧: DBに接続しレコードを取得する
@@ -12,5 +12,9 @@ export async function GET(
   if (!category) {
     return Response.json({ message: "Not Found" }, { status: 404 });
   }
-  return Response.json({ category });
+
+  const searchParams = request.nextUrl.searchParams;
+  const searchParamsObj = Object.fromEntries(searchParams);
+
+  return Response.json({ category, searchParamsObj });
 }
